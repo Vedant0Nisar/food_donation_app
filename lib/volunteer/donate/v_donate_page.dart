@@ -537,6 +537,7 @@ class _VDonatePageState extends State<VDonatePage> {
 
     final user = authController.userModel.value;
     if (user == null) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('User data not available. Please try again.'),
@@ -547,10 +548,8 @@ class _VDonatePageState extends State<VDonatePage> {
     }
 
     try {
-      // Set loading state in auth controller
       authController.isLoading.value = true;
 
-      // Use Firebase service instead of API
       final firebaseFoodService = FirebaseFoodService.instance;
 
       final success = await firebaseFoodService.insertFoodPostData(
@@ -565,28 +564,20 @@ class _VDonatePageState extends State<VDonatePage> {
         status: 'available',
       );
 
-      // if (!mounted) return;
-
       if (success) {
-        // Clear form after successful post
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Food donation posted successfully!'),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 3),
+          ),
+        );
         _clearForm();
-
-        AwesomeDialog(
-          context: context,
-          dialogType: DialogType.success,
-          animType: AnimType.scale,
-          title: 'Food Donation Posted!',
-          desc: 'Thank you for donating food to help others in need',
-          btnOkOnPress: () {
-            Get.back(); // Go back to main page
-          },
-        ).show();
       } else {
         throw Exception('Failed to post food donation');
       }
     } catch (e) {
-      if (!mounted) return;
-
+      // if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error posting donation: ${e.toString()}'),
@@ -595,9 +586,10 @@ class _VDonatePageState extends State<VDonatePage> {
         ),
       );
     } finally {
-      if (mounted) {
-        authController.isLoading.value = false;
-      }
+      authController.isLoading.value = false;
+
+      // 👇 Use Get.back() instead of Navigator.of(context).pop()
+      if (Get.isOverlaysOpen ?? false) Get.back();
     }
   }
 

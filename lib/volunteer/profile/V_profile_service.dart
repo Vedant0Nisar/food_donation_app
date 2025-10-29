@@ -19,7 +19,7 @@ class ProfileService {
 
   Future<UserModel?> getUserProfile() async {
     _currentUid = _storage.read('currentUserUid') ?? '';
-    _userType = _storage.read('userType') ?? 'volunteer';
+    _userType = _storage.read('userType') ?? '';
 
     print('🔍 Starting getUserProfile...');
     print('🔍 Current UID: $_currentUid');

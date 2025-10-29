@@ -1,6 +1,7 @@
 import 'package:food_donation_app/authenticate/auth_controller.dart';
 import 'package:food_donation_app/authenticate/login_page.dart';
 import 'package:food_donation_app/volunteer/donate/v_donate_page.dart';
+import 'package:food_donation_app/volunteer/history/v_history_controller.dart';
 import 'package:food_donation_app/volunteer/history/v_history_page.dart';
 import 'package:food_donation_app/volunteer/home/v_home_page.dart';
 import 'package:food_donation_app/volunteer/profile/v_profile_page.dart';
@@ -20,7 +21,7 @@ class _VHomePageState extends State<VMainPage> {
   List pages = [
     const VHomePage(),
     const VDonatePage(),
-    const VHistory(),
+    FoodPostHistoryView(),
     const VProfilePage(),
   ];
 
@@ -43,9 +44,17 @@ class _VHomePageState extends State<VMainPage> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
         child: SalomonBottomBar(
-            onTap: ((index) {
+            onTap: ((index) async {
               setState(() {});
               _currentIndex = index;
+              if (_currentIndex == 2) {
+                // Refresh history page when navigated to
+
+                var controller = Get.find<FoodPostController>();
+
+                // await controller.loadStats();
+                controller.refreshData();
+              }
             }),
             currentIndex: _currentIndex,
             items: [

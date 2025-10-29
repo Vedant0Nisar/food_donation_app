@@ -238,52 +238,6 @@ class FirebaseFoodService {
     return sqrt(deltaLat * deltaLat + deltaLng * deltaLng);
   }
 
-  /// Update food post status
-  Future<bool> updateFoodPostStatus(String postId, String status,
-      {String? claimedByUid}) async {
-    try {
-      Map<String, dynamic> updateData = {
-        'status': status,
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
-
-      if (status == 'claimed' && claimedByUid != null) {
-        updateData['claimedBy'] = claimedByUid;
-        updateData['claimedAt'] = FieldValue.serverTimestamp();
-      } else if (status == 'completed') {
-        updateData['completedAt'] = FieldValue.serverTimestamp();
-      }
-
-      await _foodPostsCollection.doc(postId).update(updateData);
-      return true;
-    } catch (e) {
-      print('Error updating food post status: $e');
-      return false;
-    }
-  }
-
-  /// Delete food post
-  Future<bool> deleteFoodPost(String postId, String userUid) async {
-    try {
-      // Verify ownership
-      DocumentSnapshot doc = await _foodPostsCollection.doc(postId).get();
-      if (!doc.exists) {
-        throw Exception('Post not found');
-      }
-
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      if (data['userUid'] != userUid) {
-        throw Exception('Not authorized to delete this post');
-      }
-
-      await _foodPostsCollection.doc(postId).delete();
-      return true;
-    } catch (e) {
-      print('Error deleting food post: $e');
-      return false;
-    }
-  }
-
   /// Search food posts
   Future<List<QueryDocumentSnapshot>> searchFoodPosts(String query) async {
     try {
@@ -299,6 +253,82 @@ class FirebaseFoodService {
     } catch (e) {
       print('Error searching food posts: $e');
       return [];
+    }
+  }
+
+  /////////////////////////////////////////////////////////////////
+  ///
+
+  /// Stream posts created by a particular user (ordered newest first)
+  Stream<QuerySnapshot> getUserFoodPostsStream(String uid) {
+    return _foodPostsCollection
+        .where('userUid', isEqualTo: uid)
+        .orderBy('createdAt', descending: true)
+        .snapshots();
+  }
+
+  /// public helper to get a user document (from volunteers or ngos)
+  Future<Map<String, dynamic>?> getUserById(String uid) async {
+    try {
+      DocumentSnapshot vol =
+          await _firestore.collection('volunteers').doc(uid).get();
+      if (vol.exists) return vol.data() as Map<String, dynamic>;
+      DocumentSnapshot ngo = await _firestore.collection('ngos').doc(uid).get();
+      if (ngo.exists) return ngo.data() as Map<String, dynamic>;
+      return null;
+    } catch (e) {
+      print('getUserById error: $e');
+      return null;
+    }
+  }
+
+  /// delete post (verifies ownership)
+  Future<bool> deleteFoodPost(String postId, String userUid) async {
+    try {
+      DocumentSnapshot doc = await _foodPostsCollection.doc(postId).get();
+      if (!doc.exists) throw Exception('Post not found');
+      final data = doc.data() as Map<String, dynamic>;
+      if (data['userUid'] != userUid) {
+        throw Exception('Not authorized to delete this post');
+      }
+      await _foodPostsCollection.doc(postId).delete();
+      return true;
+    } catch (e) {
+      print('Error deleting post: $e');
+      return false;
+    }
+  }
+
+  /// update status
+  Future<bool> updateFoodPostStatus(String postId, String status,
+      {String? claimedByUid}) async {
+    try {
+      Map<String, dynamic> updateData = {
+        'status': status,
+        'updatedAt': FieldValue.serverTimestamp(),
+      };
+      if (status == 'claimed' && claimedByUid != null) {
+        updateData['claimedBy'] = claimedByUid;
+        updateData['claimedAt'] = FieldValue.serverTimestamp();
+      } else if (status == 'completed') {
+        updateData['completedAt'] = FieldValue.serverTimestamp();
+      }
+      await _foodPostsCollection.doc(postId).update(updateData);
+      return true;
+    } catch (e) {
+      print('updateFoodPostStatus error: $e');
+      return false;
+    }
+  }
+
+  /// optional: fetch single doc
+  Future<DocumentSnapshot?> getFoodPostById(String postId) async {
+    try {
+      final doc = await _foodPostsCollection.doc(postId).get();
+      return doc;
+    } catch (e) {
+      print('getFoodPostById error: $e');
+      return null;
     }
   }
 }

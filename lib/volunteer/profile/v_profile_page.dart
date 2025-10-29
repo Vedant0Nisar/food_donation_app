@@ -5,6 +5,7 @@ import 'package:food_donation_app/firebase_services/auth_service.dart';
 import 'package:food_donation_app/utils/globals.dart';
 import 'package:food_donation_app/utils/routes.dart';
 import 'package:food_donation_app/volunteer/profile/V_profile_service.dart';
+import 'package:food_donation_app/volunteer/profile/v_edit_profile.dart';
 import 'package:food_donation_app/widgets/dialogue_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -247,9 +248,9 @@ class _VProfilePageState extends State<VProfilePage> {
                                                 color: Colors.white,
                                                 icon: const Icon(Icons.edit),
                                                 onPressed: () {
-                                                  Navigator.pushNamed(context,
-                                                          Routes().vEditProfile)
-                                                      .then((_) {
+                                                  Get.offAll(
+                                                          () => VEditProfile())
+                                                      ?.then((_) {
                                                     setState(() {
                                                       userProfile();
                                                     });
@@ -321,15 +322,8 @@ class _VProfilePageState extends State<VProfilePage> {
                                                   const SizedBox(height: 20),
                                                   OutlinedButton.icon(
                                                     onPressed: () {
-                                                      Navigator.pushNamed(
-                                                              context,
-                                                              Routes()
-                                                                  .vEditProfile)
-                                                          .then((_) {
-                                                        setState(() {
-                                                          userProfile();
-                                                        });
-                                                      });
+                                                      Get.to(
+                                                          () => VEditProfile());
                                                     },
                                                     icon: const Icon(
                                                       Icons.edit,

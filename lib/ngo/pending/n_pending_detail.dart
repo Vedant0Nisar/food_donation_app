@@ -125,7 +125,7 @@ class _NPendingDetailState extends State<NPendingDetail> {
           title: 'Food Request Completed',
           desc: 'Thanks for collecting food',
           btnOkOnPress: () {
-            Navigator.pushReplacementNamed(context, Routes().nMainRoute);
+            // Navigator.pushReplacementNamed(context, Routes().nMainRoute);
           },
         ).show();
       } else {}
