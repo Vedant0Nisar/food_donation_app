@@ -29,7 +29,8 @@ class _WalkthroughState extends State<Walkthrough> {
   void _completeWalkthrough() {
     final prefs = GetStorage();
     prefs.write('walkthroughCompleted', true);
-    Get.offAllNamed('/welcome');
+    // Get.offAllNamed('/welcome');
+    Get.offAll(() => const WelcomePage());
   }
 
   @override

@@ -54,5 +54,5 @@ class FeedFoodStrings {
       "Make a difference in people's lives with just one tap.";
 
   // Pages
-  static const BrandName = "Feed-n-Joy";
+  static const BrandName = "Helping Hand";
 }

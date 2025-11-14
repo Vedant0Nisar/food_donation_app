@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_donation_app/ngo/ngo.dart';
+import 'package:food_donation_app/ngo/ngo_main_tab_view.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,7 +9,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:food_donation_app/authenticate/model.dart';
 import 'package:food_donation_app/authenticate/email_verification.dart';
 import 'package:food_donation_app/intro/welcome_page.dart';
-import 'package:food_donation_app/ngo/n_main_page.dart';
 import 'package:food_donation_app/volunteer/v_main_page.dart';
 
 enum UserType { volunteer, ngo }
@@ -90,6 +91,7 @@ class AuthController extends GetxController {
             UserModel.fromMap(volunteerDoc.data() as Map<String, dynamic>);
         userType.value = UserType.volunteer;
         _storage.write('userType', 'volunteer');
+        _storage.write('userName', userModel.value!.username ?? "");
         return;
       }
 
@@ -243,7 +245,7 @@ class AuthController extends GetxController {
         if (userType.value == UserType.volunteer) {
           Get.offAll(() => VMainPage());
         } else if (userType.value == UserType.ngo) {
-          Get.offAll(() => NMain());
+          Get.offAll(() => NGOMainTabView());
         }
       } else {
         showErrorSnackbar('Email not verified yet. Please check your inbox.');
@@ -307,11 +309,11 @@ class AuthController extends GetxController {
         print(
             "uuuuuiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiddddddddddddddddddd");
         if (userType.value == UserType.volunteer) {
-          Get.off(() => VMainPage()); // Send to volunteer dashboard
+          Get.offAll(() => VMainPage()); // Send to volunteer dashboard
         } else if (userType.value == UserType.ngo) {
-          Get.off(() => NMain()); // Send to NGO dashboard
+          Get.offAll(() => NGOMainTabView()); // Send to NGO dashboard
         }
-        // handle navigation after ti vmainpage or nmaipage
+        // handle navigation after ti NGOMainTabView or nmaipage
       } else {
         showErrorSnackbar('Please verify your email before logging in');
         // Set user type for email verification screen

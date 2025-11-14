@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:food_donation_app/ngo/ngo.dart';
+import 'package:food_donation_app/ngo/ngo_main_tab_view.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:food_donation_app/authenticate/auth_controller.dart';
@@ -9,7 +11,6 @@ import 'package:food_donation_app/authenticate/email_verification.dart';
 import 'package:food_donation_app/intro/splash_screen.dart';
 import 'package:food_donation_app/intro/walkthrough.dart';
 import 'package:food_donation_app/intro/welcome_page.dart';
-import 'package:food_donation_app/ngo/n_main_page.dart';
 import 'package:food_donation_app/volunteer/v_main_page.dart';
 import 'firebase_options.dart';
 
@@ -75,7 +76,7 @@ class MyApp extends StatelessWidget {
       if (controller.userType.value == UserType.volunteer) {
         return VMainPage();
       } else if (controller.userType.value == UserType.ngo) {
-        return NMain();
+        return NGOMainTabView();
       } else {
         // User type not determined yet, trigger load
         WidgetsBinding.instance.addPostFrameCallback((_) {

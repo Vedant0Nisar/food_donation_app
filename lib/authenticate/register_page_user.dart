@@ -23,6 +23,27 @@ class _VolunteerRegistrationFormState extends State<VolunteerRegistrationForm> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
+// ✅ Add this helper function at the top of your Dart file (outside the widget class)
+  String? validateStrongPassword(String? value) {
+    final password = value ?? '';
+
+    if (password.isEmpty) {
+      return 'Please enter password';
+    }
+
+    // Strong password rule:
+    // Minimum 8 chars, at least 1 uppercase, 1 lowercase, 1 number, and 1 special character
+    final regex = RegExp(
+      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&^#_\-])[A-Za-z\d@$!%*?&^#_\-]{8,}$',
+    );
+
+    if (!regex.hasMatch(password)) {
+      return 'Password must include upper, lower, number & special character';
+    }
+
+    return null; // ✅ Valid password
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -80,6 +101,63 @@ class _VolunteerRegistrationFormState extends State<VolunteerRegistrationForm> {
                       },
                     ),
                     const SizedBox(height: 10),
+                    // _buildTextField(
+                    //   controller: _passwordController,
+                    //   label: 'Password',
+                    //   icon: Icons.lock_outline,
+                    //   obscureText: _obscurePassword,
+                    //   suffixIcon: IconButton(
+                    //     icon: Icon(
+                    //       _obscurePassword
+                    //           ? Icons.visibility_off
+                    //           : Icons.visibility,
+                    //       color: Colors.grey.shade600,
+                    //     ),
+                    //     onPressed: () {
+                    //       setState(() {
+                    //         _obscurePassword = !_obscurePassword;
+                    //       });
+                    //     },
+                    //   ),
+                    //   validator: (value) {
+                    //     if (value == null || value.isEmpty) {
+                    //       return 'Please enter password';
+                    //     }
+                    //     if (value.length < 6) {
+                    //       return 'Password must be at least 6 characters';
+                    //     }
+                    //     return null;
+                    //   },
+                    // ),
+                    // const SizedBox(height: 10),
+                    // _buildTextField(
+                    //   controller: _confirmPasswordController,
+                    //   label: 'Confirm Password',
+                    //   icon: Icons.lock_outline,
+                    //   obscureText: _obscureConfirmPassword,
+                    //   suffixIcon: IconButton(
+                    //     icon: Icon(
+                    //       _obscureConfirmPassword
+                    //           ? Icons.visibility_off
+                    //           : Icons.visibility,
+                    //       color: Colors.grey.shade600,
+                    //     ),
+                    //     onPressed: () {
+                    //       setState(() {
+                    //         _obscureConfirmPassword = !_obscureConfirmPassword;
+                    //       });
+                    //     },
+                    //   ),
+                    //   validator: (value) {
+                    //     if (value == null || value.isEmpty) {
+                    //       return 'Please confirm password';
+                    //     }
+                    //     if (value != _passwordController.text) {
+                    //       return 'Passwords do not match';
+                    //     }
+                    //     return null;
+                    //   },
+                    // ),
                     _buildTextField(
                       controller: _passwordController,
                       label: 'Password',
@@ -98,17 +176,12 @@ class _VolunteerRegistrationFormState extends State<VolunteerRegistrationForm> {
                           });
                         },
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter password';
-                        }
-                        if (value.length < 6) {
-                          return 'Password must be at least 6 characters';
-                        }
-                        return null;
-                      },
+                      validator:
+                          validateStrongPassword, // ✅ using strong validator
                     ),
+
                     const SizedBox(height: 10),
+
                     _buildTextField(
                       controller: _confirmPasswordController,
                       label: 'Confirm Password',
@@ -131,10 +204,19 @@ class _VolunteerRegistrationFormState extends State<VolunteerRegistrationForm> {
                         if (value == null || value.isEmpty) {
                           return 'Please confirm password';
                         }
+
+                        // ✅ First, check strong password rules for confirm password too
+                        final strongCheck = validateStrongPassword(value);
+                        if (strongCheck != null) {
+                          return strongCheck;
+                        }
+
+                        // ✅ Then check if both match
                         if (value != _passwordController.text) {
                           return 'Passwords do not match';
                         }
-                        return null;
+
+                        return null; // ✅ All good
                       },
                     ),
                   ],

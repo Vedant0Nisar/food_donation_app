@@ -100,12 +100,15 @@ class _VHomePageState extends State<VHomePage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Donate",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.blueGrey[900]),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      "Donate",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.blueGrey[900]),
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -140,14 +143,17 @@ class _VHomePageState extends State<VHomePage> {
               const SizedBox(
                 height: 30,
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Lates Update",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Colors.blueGrey[900]),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "Lates Update",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.blueGrey[900]),
+                  ),
                 ),
               ),
               const SizedBox(

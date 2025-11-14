@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'Food Donation',
+                        'Helping Hand',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,

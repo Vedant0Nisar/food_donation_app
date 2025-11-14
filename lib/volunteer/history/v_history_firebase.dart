@@ -36,7 +36,7 @@ class HistoryService {
   Stream<QuerySnapshot> getClaimedFoodPosts(String userUid) {
     print('📊 Streaming claimed posts for: $userUid');
     return _foodPostsCollection
-        .where('claimedBy', isEqualTo: userUid)
+        // .where('claimedBy', isEqualTo: userUid)
         .where('status', isEqualTo: 'claimed')
         .orderBy('claimedAt', descending: true)
         .snapshots();
@@ -58,7 +58,8 @@ class HistoryService {
   }
 
   /// Claim a post
-  Future<void> claimFoodPost(String postId, String userUid) async {
+  Future<void> claimFoodPost(
+      String postId, String userUid, String NgoUsername) async {
     print('🤝 Claiming post $postId by $userUid');
 
     try {
@@ -85,7 +86,7 @@ class HistoryService {
       await _foodPostsCollection.doc(postId).update({
         'status': 'claimed',
         'claimedBy': userUid,
-        'claimedByName': userData['name'] ?? 'Volunteer',
+        'claimedByName': NgoUsername ?? 'Volunteer',
         'claimedAt': FieldValue.serverTimestamp(),
         'updatedAt': FieldValue.serverTimestamp(),
       });
@@ -110,8 +111,8 @@ class HistoryService {
 
       final data = postDoc.data() as Map<String, dynamic>;
 
-      if (data['claimedBy'] != userUid) {
-        throw Exception('You can only complete posts you claimed');
+      if (data['claimedBy'] == userUid) {
+        throw Exception('You can only complete posts you Posted');
       }
 
       if (data['status'] != 'claimed') {

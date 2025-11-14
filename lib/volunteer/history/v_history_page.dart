@@ -28,8 +28,8 @@ class FoodPostHistoryView extends StatelessWidget {
           bottom: const TabBar(
             tabs: [
               Tab(icon: Icon(Icons.restaurant), text: 'My Posts'),
-              Tab(icon: Icon(Icons.explore), text: 'Available'),
-              Tab(icon: Icon(Icons.shopping_cart), text: 'Claimed'),
+              Tab(icon: Icon(Icons.explore), text: 'Everyone\'s Posts'),
+              Tab(icon: Icon(Icons.shopping_cart), text: 'My Claimed Posts'),
             ],
           ),
         ),
@@ -623,39 +623,39 @@ class FoodPostCard extends StatelessWidget {
                                   ),
                                 ),
                               if (showClaim && onClaim != null)
-                                ElevatedButton.icon(
-                                  onPressed: onClaim,
-                                  icon: const Icon(Icons.volunteer_activism,
-                                      size: 18),
-                                  label: const Text('Claim Post',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600)),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orange,
-                                    foregroundColor: Colors.white,
-                                    elevation: 0,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 12),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
+                                // ElevatedButton.icon(
+                                //   onPressed: onClaim,
+                                //   icon: const Icon(Icons.volunteer_activism,
+                                //       size: 18),
+                                //   label: const Text('Claim Post',
+                                //       style: TextStyle(
+                                //           fontWeight: FontWeight.w600)),
+                                //   style: ElevatedButton.styleFrom(
+                                //     backgroundColor: Colors.orange,
+                                //     foregroundColor: Colors.white,
+                                //     elevation: 0,
+                                //     padding: const EdgeInsets.symmetric(
+                                //         horizontal: 20, vertical: 12),
+                                //     shape: RoundedRectangleBorder(
+                                //       borderRadius: BorderRadius.circular(12),
+                                //     ),
+                                //   ),
+                                // ),
+                                if (showCancel && onCancel != null) ...[
+                                  TextButton.icon(
+                                    onPressed: onCancel,
+                                    // icon: const Icon(Icons.close, size: 18),
+                                    label: const Text('Cancel',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600)),
+                                    style: TextButton.styleFrom(
+                                      foregroundColor: Colors.red,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 6, vertical: 10),
                                     ),
                                   ),
-                                ),
-                              if (showCancel && onCancel != null) ...[
-                                TextButton.icon(
-                                  onPressed: onCancel,
-                                  // icon: const Icon(Icons.close, size: 18),
-                                  label: const Text('Cancel',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600)),
-                                  style: TextButton.styleFrom(
-                                    foregroundColor: Colors.red,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 6, vertical: 10),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                              ],
+                                  const SizedBox(width: 8),
+                                ],
                               if (showComplete && onComplete != null)
                                 ElevatedButton.icon(
                                   onPressed: onComplete,

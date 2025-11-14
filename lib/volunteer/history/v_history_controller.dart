@@ -200,7 +200,7 @@ class FoodPostController extends GetxController {
       isLoading.value = true;
       print('🤝 Claiming post: $postId');
 
-      await _historyService.claimFoodPost(postId, currentUid);
+      await _historyService.claimFoodPost(postId, currentUid, 'Volunteer');
 
       Get.snackbar(
         "Success",

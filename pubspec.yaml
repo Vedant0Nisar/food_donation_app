@@ -63,6 +63,8 @@ dependencies:
   get: ^4.7.2
   get_storage: ^2.1.1 
 
+  flutter_launcher_icons: ^0.14.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -117,3 +119,19 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+# flutter_icons:
+#   android: true
+#   ios: true
+#   image_path: "assets/images/logo-abhi.png"
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo-abhi.png" # The logo itself
+  # --- Add these lines for a white background for adaptive icons (Android) ---
+  adaptive_icon_background: "#FFFFFF" 
+  background_color: "#FFFFFF"
+  color: "#FFFFFF"
+  background_image: "assets/images/logo-text.png"
+  # You need a separate foreground image for adaptive icons to work correctly
+  adaptive_icon_foreground: "assets/images/logo-abhi.png" 
+

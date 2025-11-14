@@ -5,6 +5,7 @@ import 'package:food_donation_app/utils/routes.dart';
 import 'package:food_donation_app/widgets/sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -75,6 +76,8 @@ class WelcomePage extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             Get.to(LoginPage());
+                            // final prefs = GetStorage();
+                            // prefs.write('walkthroughCompleted', false);
                           },
                           style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,

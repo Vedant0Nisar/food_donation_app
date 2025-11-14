@@ -147,7 +147,6 @@ class _VEditProfileState extends State<VEditProfile> {
 
                               if (flag == true) {
                                 Navigator.of(context).pop();
-                                Navigator.of(context).pop();
                               } else {
                                 Navigator.of(context).pop();
                                 ScaffoldMessenger.of(context)

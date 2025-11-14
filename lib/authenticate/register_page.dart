@@ -57,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Join Food Donation",
+                    "Join Helping Hand",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 24,

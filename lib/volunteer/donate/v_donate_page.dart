@@ -456,7 +456,7 @@ class _VDonatePageState extends State<VDonatePage> {
                     ],
                   )
                 : const Text(
-                    "Post Food Donation",
+                    "Post Helping Hand",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -567,14 +567,14 @@ class _VDonatePageState extends State<VDonatePage> {
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Food donation posted successfully!'),
+            content: Text('Helping Hand posted successfully!'),
             backgroundColor: Colors.green,
             duration: Duration(seconds: 3),
           ),
         );
         _clearForm();
       } else {
-        throw Exception('Failed to post food donation');
+        throw Exception('Failed to post Helping Hand');
       }
     } catch (e) {
       // if (!mounted) return;

@@ -1,8 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, deprecated_member_use
 
-import 'package:food_donation_app/ngo/home/food_detail.dart';
-import 'package:food_donation_app/ngo/models/n_home_model.dart';
-import 'package:food_donation_app/ngo/pending/n_pending_detail.dart';
 import 'package:food_donation_app/volunteer/donate/v_donate_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
@@ -38,7 +35,8 @@ class VHomeCard extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Text(
-                  "Share Your Love \n with donation",
+                  "Share Your \nLove with \nSupported People",
+                  maxLines: 3,
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -48,16 +46,16 @@ class VHomeCard extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              SizedBox(
-                height: 30,
-                width: 100,
+              /*      SizedBox(
+                height: 0,
+                width: 0,
                 child: ElevatedButton(
                   onPressed: (() {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const VDonatePage()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => const VDonatePage()),
+                    // );
                   }),
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.deepPurple[900],
@@ -66,11 +64,12 @@ class VHomeCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                       )),
                   child: const Text(
-                    "Donate",
+                    "",
                     style: TextStyle(fontSize: 14),
                   ),
                 ),
               ),
+         */
             ],
           ),
           const SizedBox(
@@ -257,6 +256,7 @@ class NewsCards extends StatelessWidget {
   // }
 }
 
+/* 
 class NRequestCards extends StatelessWidget {
   // we need list of articles
   final NgoFoodRequestModel foodRequest;
@@ -588,7 +588,7 @@ class NCompleteCard extends StatelessWidget {
     );
   }
 }
-
+ */
 class VProfilNumberData extends StatefulWidget {
   String title_text;
   String number_text;

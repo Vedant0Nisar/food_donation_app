@@ -37,6 +37,25 @@ class _NgoRegistrationFormState extends State<NgoRegistrationForm> {
     'Academic Institutions (Private)',
     'Academic Institutions (Govt)'
   ];
+  // Add this helper function anywhere above your widget (e.g., top of file)
+  String? validateStrongPassword(String? value) {
+    final password = value ?? '';
+
+    if (password.isEmpty) {
+      return 'Please enter password';
+    }
+
+    // Standard strong password regex
+    final regex = RegExp(
+      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&^#_\-])[A-Za-z\d@$!%*?&^#_\-]{8,}$',
+    );
+
+    if (!regex.hasMatch(password)) {
+      return 'Password must include upper, lower, number & special character';
+    }
+
+    return null; // ✅ Valid
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,6 +192,64 @@ class _NgoRegistrationFormState extends State<NgoRegistrationForm> {
                     ),
                     const SizedBox(height: 10),
 
+                    // _buildTextField(
+                    //   controller: _passwordController,
+                    //   label: 'Password',
+                    //   icon: Icons.lock_outline,
+                    //   obscureText: _obscurePassword,
+                    //   suffixIcon: IconButton(
+                    //     icon: Icon(
+                    //       _obscurePassword
+                    //           ? Icons.visibility_off
+                    //           : Icons.visibility,
+                    //       color: Colors.grey.shade600,
+                    //     ),
+                    //     onPressed: () {
+                    //       setState(() {
+                    //         _obscurePassword = !_obscurePassword;
+                    //       });
+                    //     },
+                    //   ),
+                    //   validator: (value) {
+                    //     if (value == null || value.isEmpty) {
+                    //       return 'Please enter password';
+                    //     }
+                    //     if (value.length < 6) {
+                    //       return 'Password must be at least 6 characters';
+                    //     }
+                    //     return null;
+                    //   },
+                    // ),
+                    // const SizedBox(height: 10),
+
+                    // _buildTextField(
+                    //   controller: _confirmPasswordController,
+                    //   label: 'Confirm Password',
+                    //   icon: Icons.lock_outline,
+                    //   obscureText: _obscureConfirmPassword,
+                    //   suffixIcon: IconButton(
+                    //     icon: Icon(
+                    //       _obscureConfirmPassword
+                    //           ? Icons.visibility_off
+                    //           : Icons.visibility,
+                    //       color: Colors.grey.shade600,
+                    //     ),
+                    //     onPressed: () {
+                    //       setState(() {
+                    //         _obscureConfirmPassword = !_obscureConfirmPassword;
+                    //       });
+                    //     },
+                    //   ),
+                    //   validator: (value) {
+                    //     if (value == null || value.isEmpty) {
+                    //       return 'Please confirm password';
+                    //     }
+                    //     if (value != _passwordController.text) {
+                    //       return 'Passwords do not match';
+                    //     }
+                    //     return null;
+                    //   },
+                    // ),
                     _buildTextField(
                       controller: _passwordController,
                       label: 'Password',
@@ -191,16 +268,10 @@ class _NgoRegistrationFormState extends State<NgoRegistrationForm> {
                           });
                         },
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter password';
-                        }
-                        if (value.length < 6) {
-                          return 'Password must be at least 6 characters';
-                        }
-                        return null;
-                      },
+                      validator:
+                          validateStrongPassword, // ✅ Replaced old inline logic
                     ),
+
                     const SizedBox(height: 10),
 
                     _buildTextField(
